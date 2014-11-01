@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>Rapid Mail</title>
+
+ 	<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+	<script src="jquery.mobile/jquery-1.7.2.min"></script>
+	<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+	<script src="manejador.js"></script>
+	<!-- CDN Respositories: For production, replace lines above with these uncommented minified versions -->
+	<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />-->
+	<!-- <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>-->
+	<!-- <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
+	
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+<body onload="init()">
+
+<div data-role="page" id="pageLogin">
+	<div data-role="content" data-theme="a" >
+		<img class="img-responsive img-thumbnail" src="img/rapidmail.png" />
+	 		<h1>Login</h1>
+	  	<div class="form-group">
+	    	<label for="inputEmail3" class="col-sm-2 control-label">Email o Username</label>
+	    	<div class="col-sm-10">
+	      		<input type="email"  class="required" id="email" placeholder="Email" name="email">
+	    	</div>
+	  	</div>
+	  	<div class="form-group">
+		    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+	    	<div class="col-sm-10">
+	      		<input type="password"  class="required" id="password" placeholder="Password" name="password">
+	    	</div>
+	  	</div>
+	  	<div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+	    	 	<a  data-role="button" data-icon="check" onclick="login()" data-theme="a"  >Ingresar</a>
+	    	</div>
+	  	</div>
+	  	<a  data-role="button" data-icon="star" href="#pageAlta">Registrarse </a> 
+	  	<a  data-role="button" data-icon="back" href="#pageRecuperar">Recuperar Contraseña </a> 
+	 </div><!-- container -->		
+</div><!-- Login Pagina de Incio -->
+
+<div data-role="page" id="pageRecuperar">
+	<div  data-role="content" data-theme="b">
+    	<h1>Recuperar Password</h1>
+      	</hr>
+		<div data-role="fieldcontain">
+      		<label for="inputEmail3" class="col-sm-2 control-label">Email : </label>
+        	<input type="email"  class="required email"  id="emailrecuperar" >
+    	</div>
+    	
+    	<div class="form-group">
+    	     <div class="col-sm-offset-2 col-sm-10">
+        		<button onclick="recuperar()" data-theme="c"  class="btn btn-default">Recuperar</button>
+      		</div>
+    	</div>
+	  </div>
+</div><!-- Restaurar Pagina de Recuperara Password -->
+   
+
+<div data-role="page" id="pageAlta">
+	<div  data-role="content" data-theme="b">
+		<input type="text"  class="required"id="username" name="username" placeholder="Username">
+	    <input type="email"  class="required email" id="mail" name="mail" placeholder="Email">
+	    <input type="email"   class="required email"  id="mail2" placeholder="Email Repeat">
+	    <input type="password"  class="required" id="pass" name="pass" placeholder="Password">
+	    <input type="password"  class="required" id="pass2" name="pass2" placeholder="Password Repeat">
+	    <button  class="btn btn-success" onclick="registrar()" >Registrar</button>
+	</div>
+</div>
+<!-- Alta Pagina de Alta sistema -->
+
+
+<div data-role="page" id="pageCorreos">
+	<div data-role="header">
+  		<h1>Send</h1>
+		<a  data-icon="gear" href="#pageEditContactos" >Contactos</a></li>
+		<a  data-icon="more" href="#pageAddContactos" >Add Contacto</a></li>
+	</div><!-- /header -->
+	<div data-role="footer" data-position="fixed">
+		<a  data-icon="info" href="#" onclick="cerrarSession()" >Cerrar Session</a></li>
+		<a  data-icon="home" href="#" onclick="cerrarApp()">Salir</a></li>
+	</div>
+	<div data-role="content" datae-theme="c">
+		<h2>Enviar Correo </h2>
+		<div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+		    <div class="col-sm-10">
+				<select  id="mail_email" data-theme="a"  class="required"  onclick="listarContactosCorreos()" >
+					<option>Correos</option>
+				</select>
+		    </div>
+		</div>
+		<hr/>
+		<div class="form-group">
+		    <label for="inputPassword" class="col-sm-2 control-label">Asunto</label>
+		    <div class="col-sm-10">
+				<input name="asunto" id="mail_asunto"  class="required"/>
+		    </div>
+		</div>
+		<hr/>
+		<div class="form-group">
+		    <label for="inputPassword" class="col-sm-2 control-label">Texto</label>
+		    <div class="col-sm-10">
+		      <textarea name="texto" id="mail_cuerpo"  class="required"></textarea>
+			</div>
+		</div>
+		<hr/>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+		    	<button onclick="email()" data-theme="a">Enviar</button>
+		    </div>
+		</div>
+	</div>
+</div><!-- Correos Pagina para enviar Correos -->
+    
+<div data-role="page" id="pageAddContactos">
+	<div data-role="header">
+  		<h1>Add</h1>
+		<a  data-icon="gear" href="#pageEditContactos" >Contactos</a></li>
+		<a  data-icon="more" href="#pageCorreos" >Enviar Correo</a></li>
+	</div><!-- /header -->
+	<div data-role="footer" data-position="fixed">
+		<a  data-icon="info" href="#" onclick="cerrarSession()" >Cerrar Session</a></li>
+		<a  data-icon="home" href="#" onclick="cerrarApp()">Salir</a></li>
+	</div>
+
+	<div  data-role="content" class=" ui-body ui-body-b">
+		<h2>Agregar Contacto</h2>
+	  <div class="form-group">
+	    <label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+	    <div class="col-sm-10">
+	      <input type="text"  class="required" id="nombre" placeholder="Nombre" name="nombre">
+	    </div>
+	  </div><div class="form-group">
+	    <label for="inputEmail3" class="col-sm-2 control-label">Correo </label>
+	    <div class="col-sm-10">
+	      <input type="email"  class="required email" id="correo" placeholder="Correo" name="correo">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="inputPassword" class="col-sm-2 control-label">Telefono</label>
+	    <div class="col-sm-10">
+	      <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" name="correo">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button onclick="altaContacto()" data-icon="plus">Agregar</button>
+	    </div>
+	  </div>
+	</div>	<!-- container -->
+</div><!-- addContactos Pagina para agregar Contactos -->
+
+
+<div data-role="page" id="pageEditContactos">
+	<div data-role="header">
+  		<h1>Delete</h1>
+		<a  data-icon="gear" href="#pageCorreos" >Enviar Correo</a></li>
+		<a  data-icon="more" href="#pageAddContactos" >Agregar Contacto</a></li>
+	</div><!-- /header -->
+	<div data-role="footer" data-position="fixed">
+		<a  data-icon="info" href="#" onclick="cerrarSession()" >Cerrar Session</a></li>
+		<a  data-icon="home" href="#" onclick="cerrarApp()">Salir</a></li>
+	</div>
+
+	<div data-role="content" >
+	 	<h2>Eliminar Contactos</h2>
+		<div class="content-primary">	
+			<ul data-role="listview" data-split-icon="delete" data-split-theme="a" id="personDataTable">	
+			</ul>
+		</div>
+	</div>	<!-- container -->
+</div>
+<!-- editContacto Pagina para eliminar Contactos -->
+	
+  	</body>
+</html>
